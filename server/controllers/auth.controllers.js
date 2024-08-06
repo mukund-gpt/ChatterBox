@@ -1,12 +1,19 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 export const signup = async (req, res) => {
   const { username, email, password, confirmPassword, gender } = req.body;
 
-  let validUser = await User.findOne({ email });
+  let validUser = await User.findOne({ username });
+  if (validUser) {
+    return res.status(400).json({
+      success: false,
+      message: "User Exists with Same Username",
+    });
+  }
 
+  validUser = await User.findOne({ email });
   if (validUser) {
     return res.status(400).json({
       success: false,
@@ -37,7 +44,7 @@ export const signup = async (req, res) => {
   try {
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
     await newUser.save();
-    res.status(201).json({
+    res.cookie("access_token", token, { httpOnly: true }).status(201).json({
       id: newUser._id,
       username: username,
       email: email,
