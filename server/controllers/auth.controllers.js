@@ -1,30 +1,22 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { errorHandler } from "../utils/error.js";
 
-export const signup = async (req, res) => {
+export const signup = async (req, res, next) => {
   const { username, email, password, confirmPassword, gender } = req.body;
 
   let validUser = await User.findOne({ username });
-  if (validUser) {
-    return res.status(400).json({
-      success: false,
-      message: "User Exists with Same Username",
-    });
-  }
+  if (validUser)
+    if (validUser)
+      return next(errorHandler(400, "User Exists with Same Username"));
 
   validUser = await User.findOne({ email });
-  if (validUser) {
-    return res.status(400).json({
-      success: false,
-      message: "User Exists with Same Email",
-    });
+  if (validUser) return next(errorHandler(400, "User Exists with Same Email"));
+
+  if (password !== confirmPassword) {
+    return next(errorHandler(400, "Password don't match"));
   }
-  /*   if (password !== confirmPassword) {
-    return res.status(400).json({
-      error: "Password don't match",
-    });
-  } */
 
   const hashedPassword = await bcryptjs.hash(password, 10);
   let profilePic;
