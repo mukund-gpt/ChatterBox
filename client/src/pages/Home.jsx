@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 const Home = () => {
   const location = useLocation();
@@ -17,11 +18,9 @@ const Home = () => {
 
   return (
     <>
-      <h1 className="text-green-400">ChatterBox</h1>
-      <button className="btn btn-outline btn-info">Info</button>
-      <button className="btn btn-outline btn-success">Success</button>
-      <button className="btn btn-outline btn-warning">Warning</button>
-      <button className="btn btn-outline btn-error">Error</button>
+      <div className="flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-gray-200">
+        <Sidebar />
+      </div>
       <ToastContainer />
     </>
   );
