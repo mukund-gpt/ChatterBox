@@ -4,19 +4,20 @@ import jwt from "jsonwebtoken";
 import { errorHandler } from "../utils/error.js";
 
 export const signup = async (req, res, next) => {
-  const { username, email, password, confirmPassword, gender } = req.body;
+  const { username, email, password, gender } = req.body;
 
   let validUser = await User.findOne({ username });
   if (validUser)
     if (validUser)
-      return next(errorHandler(400, "User Exists with Same Username"));
+      return next(errorHandler(200, "User Exists with Same Username"));
 
   validUser = await User.findOne({ email });
-  if (validUser) return next(errorHandler(400, "User Exists with Same Email"));
+  if (validUser) return next(errorHandler(200, "User Exists with Same Email"));
 
+  /*
   if (password !== confirmPassword) {
     return next(errorHandler(400, "Password don't match"));
-  }
+  }*/
 
   const hashedPassword = await bcryptjs.hash(password, 10);
   let profilePic;
@@ -40,6 +41,7 @@ export const signup = async (req, res, next) => {
       id: newUser._id,
       username: username,
       email: email,
+      success: true,
     });
   } catch (error) {
     console.log(error);
@@ -53,13 +55,14 @@ export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     let validUser = await User.findOne({ email });
-    if (!validUser) return next(errorHandler(404, "User Not Found"));
+    if (!validUser) return next(errorHandler(200, "User Not Found"));
 
     const validPassword = bcryptjs.compareSync(password, validUser.password);
-    if (!validPassword) return next(errorHandler(401, "Wrong Password"));
+    if (!validPassword) return next(errorHandler(200, "Wrong Password"));
 
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     res.cookie("access_token", token, { httpOnly: true }).status(200).json({
+      success: true,
       id: validUser._id,
       username: validUser.username,
       email: email,

@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const port = process.env.PORT || 8000;
 const app = express();
@@ -16,6 +17,7 @@ mongoose
     console.log(err);
   });
 
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
@@ -30,7 +32,6 @@ import usersRoutes from "./routes/user.routes.js";
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", usersRoutes);
-
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
