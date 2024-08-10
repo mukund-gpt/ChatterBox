@@ -51,7 +51,8 @@ const Login = () => {
         toast.error(`Login failed: ${data.message}`);
       }
     } catch (error) {
-      console.log("Error in Submitting form ", error);
+      console.log("Error in Submitting form", error);
+      toast.error(`Error in Submitting form ${error.message}`);
     } finally {
       setLoading(false);
     }
