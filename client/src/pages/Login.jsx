@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import chattingImage from "../assets/images/ChattingApp.png";
-
+import { useAuthContext } from "../components/context/AuthContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
   const [isPasswordVisible, setPasswordVisibility] = useState(false);
+  const { setAuthUser } = useAuthContext();
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -23,6 +25,7 @@ const Login = () => {
     e.preventDefault();
     try {
       // console.log(formData);
+      setLoading(true);
       const response = await fetch(`/api/auth/login`, {
         method: "POST",
         headers: {
@@ -40,6 +43,8 @@ const Login = () => {
       // console.log(data);
 
       if (data.success) {
+        localStorage.setItem("user", JSON.stringify(data));
+        setAuthUser(data);
         navigate("/", { state: { message: "Login successful!" } });
       } else {
         // console.log("Login failed ", data.message);
@@ -47,11 +52,9 @@ const Login = () => {
       }
     } catch (error) {
       console.log("Error in Submitting form ", error);
+    } finally {
+      setLoading(false);
     }
-  };
-
-  const navigateToSignUp = () => {
-    navigate("/signup");
   };
 
   return (
@@ -120,8 +123,13 @@ const Login = () => {
               <button
                 className="bg-[#002D74] text-white py-2 rounded-xl hover:scale-105 duration-300 hover:bg-[#206ab1] font-medium"
                 type="submit"
+                disabled={loading}
               >
-                Login
+                {loading ? (
+                  <span className="loading loading-spinner"></span>
+                ) : (
+                  "Login"
+                )}
               </button>
             </form>
             <ToastContainer />
@@ -162,12 +170,11 @@ const Login = () => {
               <p className="mr-3 md:mr-0 text-black">
                 If you don't have an account..
               </p>
-              <button
-                onClick={navigateToSignUp}
-                className="hover:border register text-white bg-[#002D74] hover:border-gray-400 rounded-xl py-2 px-5 hover:scale-110 hover:bg-[#002c7424] font-semibold duration-300"
-              >
-                Register
-              </button>
+              <Link to="/signup">
+                <button className="hover:border register text-white bg-[#002D74] hover:border-gray-400 rounded-xl py-2 px-5 hover:scale-110 hover:bg-[#002c7424] font-semibold duration-300">
+                  Register
+                </button>
+              </Link>
             </div>
           </div>
           <div className="md:block hidden w-1/2">

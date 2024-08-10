@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import chattingImage from "../assets/images/ChattingApp.png";
-
+import { useAuthContext } from "../components/context/AuthContext";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
   const [gender, setGender] = useState("");
   const [isPasswordVisible, setPasswordVisibility] = useState(false);
+  const { setAuthUser } = useAuthContext();
+  const [loading, setLoading] = useState(false);
 
   const handleSelectGender = (e) => {
     const { value } = e.target;
@@ -28,8 +30,8 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       console.log(formData);
-
       const response = await fetch(`/api/auth/signup`, {
         method: "POST",
         headers: {
@@ -48,6 +50,8 @@ const SignUp = () => {
 
       if (data.success) {
         // toast.success("Registration Success");
+        localStorage.setItem("user", JSON.stringify(data));
+        setAuthUser(data);
         navigate("/", { state: { message: "Registration successful!" } });
       } else {
         // console.log("Registration failed ", data.message);
@@ -56,12 +60,11 @@ const SignUp = () => {
     } catch (error) {
       // console.log("Error in Submitting form ", error);
       toast.error(`Error in submitting form: ${error.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const navigateToLogin = () => {
-    navigate("/login");
-  };
   return (
     <>
       <section className="bg-gray-100 min-h-screen flex box-border justify-center items-center">
@@ -159,7 +162,11 @@ const SignUp = () => {
                 className="bg-[#002D74] text-white py-2 rounded-xl hover:scale-105 duration-300 hover:bg-[#206ab1] font-medium"
                 type="submit"
               >
-                SignUp
+                {loading ? (
+                  <span className="loading loading-spinner"></span>
+                ) : (
+                  "SignUp"
+                )}
               </button>
             </form>
             <ToastContainer />
@@ -200,12 +207,11 @@ const SignUp = () => {
               <p className="mr-3 md:mr-0 text-black">
                 If you already a member, log in now.
               </p>
-              <button
-                onClick={navigateToLogin}
-                className="hover:border register text-white bg-[#002D74] hover:border-gray-400 rounded-xl py-2 px-5 hover:scale-110 hover:bg-[#002c7424] font-semibold duration-300"
-              >
-                Login
-              </button>
+              <Link to="/login">
+                <button className="hover:border register text-white bg-[#002D74] hover:border-gray-400 rounded-xl py-2 px-5 hover:scale-110 hover:bg-[#002c7424] font-semibold duration-300">
+                  Login
+                </button>
+              </Link>
             </div>
           </div>
           <div className="md:block hidden w-1/2">
