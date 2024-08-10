@@ -5,24 +5,13 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import { useAuthContext } from "./components/context/AuthContext";
 
-const ProtectedRoute = ({ authUser, children }) => {
-  return authUser ? children : <Navigate to={"/login"} />;
-};
-
 function App() {
   const { authUser } = useAuthContext();
 
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute authUser={authUser}>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/" element={authUser ? <Home /> : <Login />} />
         <Route
           path="/login"
           element={authUser ? <Navigate to={"/"} /> : <Login />}
