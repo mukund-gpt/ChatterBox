@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import chattingImage from "../assets/images/ChattingApp.png";
-import { baseUrl } from "./baseUrl.js";
+
 
 const Login = () => {
   const [formData, setFormData] = useState({});
@@ -23,7 +23,7 @@ const Login = () => {
     e.preventDefault();
     try {
       // console.log(formData);
-      const response = await fetch(`${baseUrl}/api/auth/login`, {
+      const response = await fetch(`/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

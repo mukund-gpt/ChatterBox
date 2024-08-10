@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "../components/Sidebar/Sidebar";
-import MessageContainer from "../components/Sidebar/Messages/MessageContainer";
+import MessageContainer from "../components/Messages/MessageContainer";
 
 const Home = () => {
   const location = useLocation();

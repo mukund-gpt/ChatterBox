@@ -1,6 +1,6 @@
 import React from "react";
 import Message from "./Message";
-import "../../../assets/css/styles.css"
+import "../../assets/css/styles.css"
 
 const Messages = () => {
   return (

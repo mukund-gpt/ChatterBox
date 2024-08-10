@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import chattingImage from "../assets/images/ChattingApp.png";
-import { baseUrl } from "./baseUrl.js";
+
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
@@ -30,7 +30,7 @@ const SignUp = () => {
     try {
       console.log(formData);
 
-      const response = await fetch(`${baseUrl}/api/auth/signup`, {
+      const response = await fetch(`/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
