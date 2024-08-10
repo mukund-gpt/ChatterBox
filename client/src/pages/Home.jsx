@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "../components/Sidebar/Sidebar";
+import MessageContainer from "../components/Sidebar/Messages/MessageContainer";
 
 const Home = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const Home = () => {
     <>
       <div className="flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-gray-200">
         <Sidebar />
+        <MessageContainer />
       </div>
       <ToastContainer />
     </>
