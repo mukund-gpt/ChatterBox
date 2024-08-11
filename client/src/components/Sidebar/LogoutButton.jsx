@@ -23,7 +23,7 @@ const LogoutButton = () => {
     }
   };
   return (
-    <div className="mx-4 mt-1 mb-0 p-0 text-2xl">
+    <div className="absolute bottom-0 left-0 right-0 h-[30px] px-4 py-1 text-2xl bg-white">
       <CiLogout
         onClick={logout}
         className="text-red-500 cursor-pointer hover:text-red-600"

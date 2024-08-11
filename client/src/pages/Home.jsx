@@ -19,11 +19,13 @@ const Home = () => {
 
   return (
     <>
-      <div className="flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-gray-200">
-        <Sidebar />
-        <MessageContainer />
+      <div className="h-screen flex items-center justify-center">
+        <div className="flex h-[600px] rounded-lg overflow-hidden m-auto mx-10 w-[750px] bg-orange-200">
+          <Sidebar />
+          <MessageContainer />
+        </div>
+        <ToastContainer />
       </div>
-      <ToastContainer />
     </>
   );
 };
