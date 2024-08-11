@@ -37,13 +37,19 @@ export const signup = async (req, res, next) => {
   try {
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
     await newUser.save();
-    res.cookie("access_token", token, { httpOnly: true }).status(201).json({
-      id: newUser._id,
-      username: username,
-      email: email,
-      success: true,
-      profilePic,
-    });
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+        maxAge: 2 * 24 * 60 * 60 * 1000, //2days
+      })
+      .status(201)
+      .json({
+        id: newUser._id,
+        username: username,
+        email: email,
+        success: true,
+        profilePic,
+      });
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -62,13 +68,19 @@ export const login = async (req, res, next) => {
     if (!validPassword) return next(errorHandler(200, "Wrong Password"));
 
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
-    res.cookie("access_token", token, { httpOnly: true }).status(200).json({
-      success: true,
-      id: validUser._id,
-      username: validUser.username,
-      email: email,
-      profilePic,
-    });
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+        maxAge: 2 * 24 * 60 * 60 * 1000, //2days
+      })
+      .status(200)
+      .json({
+        success: true,
+        id: validUser._id,
+        username: validUser.username,
+        email: email,
+        profilePic,
+      });
   } catch (error) {
     next(error);
   }
