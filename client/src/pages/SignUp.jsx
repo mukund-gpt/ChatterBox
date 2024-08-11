@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import chattingImage from "../assets/images/ChattingApp.png";
-import { useAuthContext } from "../components/context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});

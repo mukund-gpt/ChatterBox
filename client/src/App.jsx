@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import { useAuthContext } from "./components/context/AuthContext";
+import { useAuthContext } from "./context/AuthContext";
 
 function App() {
   const { authUser } = useAuthContext();

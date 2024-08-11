@@ -5,8 +5,10 @@ dotenv.config();
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
+import { app, server } from "./socket/socket.js";
+
 const port = process.env.PORT || 8000;
-const app = express();
+// const app = express();
 
 mongoose
   .connect(process.env.MONGO_DB_URL)
@@ -33,7 +35,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", usersRoutes);
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { CiLogout } from "react-icons/ci";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
 const LogoutButton = () => {
