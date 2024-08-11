@@ -79,7 +79,7 @@ export const login = async (req, res, next) => {
         id: validUser._id,
         username: validUser.username,
         email: email,
-        profilePic,
+        profilePic: validUser.profilePic,
       });
   } catch (error) {
     next(error);

@@ -24,7 +24,7 @@ const Home = () => {
           <Sidebar />
           <MessageContainer />
         </div>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
       </div>
     </>
   );

@@ -23,6 +23,11 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.email || !formData.password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
     try {
       // console.log(formData);
       setLoading(true);
@@ -35,7 +40,8 @@ const Login = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Network Response was Not OK");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Network Response was Not OK");
       }
 
       // console.log(response);
@@ -133,7 +139,7 @@ const Login = () => {
                 )}
               </button>
             </form>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             <br />
             <hr />
 

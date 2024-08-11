@@ -29,6 +29,16 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (
+      !formData.email ||
+      !formData.password ||
+      !formData.username ||
+      !formData.gender
+    ) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
     try {
       setLoading(true);
       console.log(formData);
@@ -82,7 +92,6 @@ const SignUp = () => {
                 placeholder="Username"
                 value={formData.username || ""}
                 onChange={handleChange}
-                required
               />
               <input
                 className="p-3 rounded-xl border border-white bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -91,7 +100,6 @@ const SignUp = () => {
                 placeholder="Email"
                 value={formData.email || ""}
                 onChange={handleChange}
-                required
               />
 
               <div className="relative">
@@ -103,7 +111,6 @@ const SignUp = () => {
                   placeholder="Password"
                   value={formData.password || ""}
                   onChange={handleChange}
-                  required
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +144,7 @@ const SignUp = () => {
                 </svg>
               </div>
 
-              <div className="mx-12 form-control required:selection:">
+              <div className="mx-12 form-control">
                 <label className="cursor-pointer label">
                   <span className="label-text text-black">Male</span>
                   <input
@@ -169,7 +176,7 @@ const SignUp = () => {
                 )}
               </button>
             </form>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             <br />
             <hr />
 
