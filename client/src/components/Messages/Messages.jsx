@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Message from "./Message";
-import "../../assets/css/styles.css"
+import "../../assets/css/styles.css";
+import useGetMessages from "../../hooks/useGetMessages";
 
 const Messages = () => {
+  const { messages, loading } = useGetMessages();
+  console.log(messages);
+
+  const lastMsgRef = useRef();
+  useEffect(() => {
+    setTimeout(() => {
+      lastMsgRef.current?.scrollIntoView({ behaviour: "smooth" });
+    });
+  }, [messages]);
   return (
     <>
       <div className="px-4 flex-1 overflow-auto scrollbar-hide">
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
+        {!loading && messages.length === 0 && (
+          <p className="flex items-center justify-center text-center text-[20px] h-full">
+            Start Conversation by Sending messages
+          </p>
+        )}
+        {!loading &&
+          messages.length > 0 &&
+          messages.map((message) => (
+            <div key={message._id} ref={lastMsgRef}>
+              <Message message={message} />
+            </div>
+          ))}
       </div>
     </>
   );
