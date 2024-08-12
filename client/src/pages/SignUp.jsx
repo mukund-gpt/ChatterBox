@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import chattingImage from "../assets/images/ChattingApp.png";
 import { useAuthContext } from "../context/AuthContext";
+import { baseUrl } from "../assets/baseUrl";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
@@ -42,7 +43,7 @@ const SignUp = () => {
     try {
       setLoading(true);
       console.log(formData);
-      const response = await fetch(`/api/auth/signup`, {
+      const response = await fetch(`${baseUrl}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

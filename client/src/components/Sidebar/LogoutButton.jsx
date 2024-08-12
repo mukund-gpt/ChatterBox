@@ -2,13 +2,14 @@ import React from "react";
 import { CiLogout } from "react-icons/ci";
 import { useAuthContext } from "../../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
+import { baseUrl } from "../../assets/baseUrl";
 
 const LogoutButton = () => {
   const { setAuthUser } = useAuthContext();
 
   const logout = async () => {
     try {
-      const res = await fetch("/api/auth/logout", {
+      const res = await fetch(`${baseUrl}/api/auth/logout`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });

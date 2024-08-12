@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useConversation from "../zustand/useConversation";
 import { toast } from "react-toastify";
+import { baseUrl } from "../assets/baseUrl";
 
 const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
@@ -10,7 +11,7 @@ const useSendMessage = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `/api/messages/send/${selectedConversation?._id}`,
+        `${baseUrl}/api/messages/send/${selectedConversation?._id}`,
         {
           method: "POST",
           headers: {

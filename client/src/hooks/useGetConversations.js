@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { baseUrl } from "../assets/baseUrl";
 
 const useGetConversations = () => {
   const [loading, setLoading] = useState(false);
@@ -10,7 +11,7 @@ const useGetConversations = () => {
       try {
         setLoading(true);
 
-        const res = await fetch("/api/users");
+        const res = await fetch(`${baseUrl}/api/users`);
 
         const data = await res.json();
         // console.log(data);
