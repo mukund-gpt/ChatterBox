@@ -12,6 +12,7 @@ const LogoutButton = () => {
       const res = await fetch(`${baseUrl}/api/auth/logout`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
 
       const data = await res.json();
