@@ -39,11 +39,10 @@ export const signup = async (req, res, next) => {
     await newUser.save();
     res
       .cookie("access_token", token, {
-        httpOnly: false, // Allow access from JavaScript (frontend)
-        maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
+        httpOnly: true,
+        expires: new Date(Date.now() + 10 * 365 * 24 * 60 * 60 * 1000), // 1 year
         sameSite: "None",
         secure: true,
-        path: "/",
       })
       .status(201)
       .json({
@@ -73,11 +72,10 @@ export const login = async (req, res, next) => {
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     res
       .cookie("access_token", token, {
-        httpOnly: false,
-        maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
+        httpOnly: true,
+        expires: new Date(Date.now() + 1 * 365 * 24 * 60 * 60 * 1000), // 1 year
         sameSite: "None",
         secure: true,
-        path: "/",
       })
       .status(200)
       .json({

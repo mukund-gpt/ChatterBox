@@ -18,7 +18,7 @@ const LogoutButton = () => {
       const data = await res.json();
       console.log(data.message);
 
-      localStorage.removeItem("user");
+      localStorage.removeItem("user_details");
       setAuthUser(null);
     } catch (error) {
       toast.error(error.message);
