@@ -43,6 +43,7 @@ export const signup = async (req, res, next) => {
         maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
         sameSite: "None",
         secure: true,
+        path: "/",
       })
       .status(201)
       .json({
@@ -76,6 +77,7 @@ export const login = async (req, res, next) => {
         maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
         sameSite: "None",
         secure: true,
+        path: "/",
       })
       .status(200)
       .json({
