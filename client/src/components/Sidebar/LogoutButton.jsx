@@ -1,7 +1,7 @@
 import React from "react";
 import { CiLogout } from "react-icons/ci";
 import { useAuthContext } from "../../context/AuthContext";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { baseUrl } from "../../assets/baseUrl";
 
 const LogoutButton = () => {
@@ -30,7 +30,6 @@ const LogoutButton = () => {
         onClick={logout}
         className="text-red-500 cursor-pointer hover:text-red-600"
       />
-      {/* <ToastContainer /> */}
     </div>
   );
 };

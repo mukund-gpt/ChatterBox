@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import Message from "./Message";
-import "../../assets/css/styles.css";
 import useGetMessages from "../../hooks/useGetMessages";
 import useListenMessages from "../../hooks/useListenMessages";
 
