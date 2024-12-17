@@ -39,7 +39,7 @@ export const signup = async (req, res, next) => {
     await newUser.save();
     res
       .cookie("access_token", token, {
-        httpOnly: true,
+        httpOnly: false, // Allow access from JavaScript (frontend)
         maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
         sameSite: "None",
         secure: true,
@@ -72,7 +72,7 @@ export const login = async (req, res, next) => {
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     res
       .cookie("access_token", token, {
-        httpOnly: true,
+        httpOnly: false,
         maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
         sameSite: "None",
         secure: true,
