@@ -7,27 +7,27 @@ const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessages, selectedConversation } = useConversation();
 
-  const sendMessage = async (message) => {
+  const sendMessage = async (formData) => {
     try {
+      console.log([...formData]);
       setLoading(true);
       const res = await fetch(
         `${baseUrl}/api/messages/send/${selectedConversation?._id}`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          body: formData,
           credentials: "include",
-          body: JSON.stringify({ message }),
         }
       );
 
       const data = await res.json();
-      if (data.error) {
-        throw new Error(data.error);
+      if (data.success) {
+        setMessages([...messages, data]);
+      } else {
+        toast.info(data.message);
       }
-      setMessages([...messages, data]);
     } catch (error) {
+      console.log(error);
       toast.error(error.message);
     } finally {
       setLoading(false);

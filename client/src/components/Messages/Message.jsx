@@ -14,7 +14,7 @@ const Message = ({ message }) => {
     ? authUser.profilePic
     : selectedConversation?.profilePic;
 
-  const msgBgColor = messageFromMe ? "bg-white" : "bg-blue-500";
+  const msgBgColor = messageFromMe ? "bg-white" : "bg-blue-300";
 
   const formattedTime = () => {
     const date = new Date(message.createdAt);
@@ -34,9 +34,19 @@ const Message = ({ message }) => {
             <img src={profilePic} />
           </div>
         </div>
-        <div className={`chat-bubble ${msgBgColor} text-black font-bold`}>
-          {message.message}
-        </div>
+
+        {message.image && (
+          <div className={`chat-bubble bg-transparent`}>
+            {<img src={message.image} width={200} />}
+          </div>
+        )}
+
+        {message.message && (
+          <div className={`chat-bubble ${msgBgColor} text-black font-bold`}>
+            {message.message}
+          </div>
+        )}
+
         <div className="chat-footer text-black opacity-50">
           {formattedTime()}
         </div>

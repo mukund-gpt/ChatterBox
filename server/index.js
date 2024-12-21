@@ -1,4 +1,4 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
@@ -19,7 +19,6 @@ mongoose
     console.log(err);
   });
 
-  
 app.use(
   cors({
     origin: `${process.env.FRONTEND_URL}`,
@@ -29,6 +28,7 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("qwerty");
@@ -48,6 +48,7 @@ server.listen(port, () => {
 
 //error handler
 app.use((err, req, res, next) => {
+  console.log(err);
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error...";
   return res.status(statusCode).json({
