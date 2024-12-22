@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import useConversation from "../../zustand/useConversation";
+import ShowImage from "./ShowImage";
 
 const Message = ({ message }) => {
   const { authUser } = useAuthContext();
   // console.log(authUser);
   const { selectedConversation } = useConversation();
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const handleImageClick = (imageUrl) => {
+    setSelectedImage(imageUrl);
+  };
 
   const messageFromMe = message.senderId === authUser.id;
 
@@ -37,7 +43,13 @@ const Message = ({ message }) => {
 
         {message.image && (
           <div className={`chat-bubble bg-transparent`}>
-            {<img src={message.image} width={200} />}
+            {
+              <img
+                src={message.image}
+                width={200}
+                onClick={() => handleImageClick(message.image)}
+              />
+            }
           </div>
         )}
 
@@ -51,6 +63,13 @@ const Message = ({ message }) => {
           {formattedTime()}
         </div>
       </div>
+
+      {selectedImage && (
+        <ShowImage
+          imageUrl={selectedImage}
+          closeImage={() => setSelectedImage(null)}
+        />
+      )}
     </>
   );
 };
