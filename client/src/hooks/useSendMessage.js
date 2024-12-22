@@ -21,8 +21,10 @@ const useSendMessage = () => {
       );
 
       const data = await res.json();
+      console.log(data);
+
       if (data.success) {
-        setMessages([...messages, data]);
+        setMessages([...messages, data.newMessage]);
       } else {
         toast.info(data.message);
       }
