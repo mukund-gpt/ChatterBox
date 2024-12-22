@@ -18,7 +18,7 @@ export const SocketContextProvider = ({ children }) => {
     if (authUser) {
       const socket = io(`${apiUrl}`, {
         query: {
-          userId: authUser.id,
+          userId: authUser._id,
         },
       });
 

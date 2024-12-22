@@ -21,7 +21,7 @@ export const signup = async (req, res, next) => {
 
   const hashedPassword = await bcryptjs.hash(password, 10);
   let profilePic;
-  if (gender === "male") {
+  if (gender === "Male") {
     profilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
   } else {
     profilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
@@ -45,18 +45,9 @@ export const signup = async (req, res, next) => {
         secure: true,
       })
       .status(201)
-      .json({
-        id: newUser._id,
-        username: username,
-        email: email,
-        success: true,
-        profilePic,
-      });
+      .json({ user: newUser, success: true });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      error: "Internal Server Error",
-    });
+    next(error);
   }
 };
 
@@ -78,13 +69,7 @@ export const login = async (req, res, next) => {
         secure: true,
       })
       .status(200)
-      .json({
-        success: true,
-        id: validUser._id,
-        username: validUser.username,
-        email: email,
-        profilePic: validUser.profilePic,
-      });
+      .json({ success: true, user: validUser });
   } catch (error) {
     next(error);
   }

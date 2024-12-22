@@ -13,7 +13,7 @@ const Message = ({ message }) => {
     setSelectedImage(imageUrl);
   };
 
-  const messageFromMe = message.senderId === authUser.id;
+  const messageFromMe = message.senderId === authUser._id;
 
   const chatClassName = messageFromMe ? "chat-end" : "chat-start";
   const profilePic = messageFromMe

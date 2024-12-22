@@ -54,8 +54,8 @@ const Login = () => {
       // console.log(data);
 
       if (data.success) {
-        localStorage.setItem("user_details", JSON.stringify(data));
-        setAuthUser(data);
+        localStorage.setItem("user_details", JSON.stringify(data.user));
+        setAuthUser(data.user);
         navigate("/", { state: { message: "Login successful!" } });
       } else {
         // console.log("Login failed ", data.message);

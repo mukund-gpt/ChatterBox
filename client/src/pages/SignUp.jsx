@@ -65,8 +65,8 @@ const SignUp = () => {
 
       if (data.success) {
         // toast.success("Registration Success");
-        localStorage.setItem("user_details", JSON.stringify(data));
-        setAuthUser(data);
+        localStorage.setItem("user_details", JSON.stringify(data.user));
+        setAuthUser(data.user);
         navigate("/", { state: { message: "Registration successful!" } });
       } else {
         // console.log("Registration failed ", data.message);
@@ -128,16 +128,16 @@ const SignUp = () => {
                   <input
                     type="checkbox"
                     className="checkbox border-green-800 [--chkbg:theme(colors.indigo.600)] [--chkfg:orange] checked:border-indigo-800"
-                    value="male"
-                    checked={gender === "male"}
+                    value="Male"
+                    checked={gender === "Male"}
                     onChange={handleSelectGender}
                   />
                   <span className="label-text text-black">Female</span>
                   <input
                     type="checkbox"
                     className="checkbox border-green-800 [--chkbg:theme(colors.indigo.600)] [--chkfg:orange] checked:border-indigo-800"
-                    value="female"
-                    checked={gender === "female"}
+                    value="Female"
+                    checked={gender === "Female"}
                     onChange={handleSelectGender}
                   />
                 </label>
