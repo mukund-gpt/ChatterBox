@@ -92,3 +92,34 @@ export const getMessage = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deleteMessage = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const message = await Message.findById(id);
+
+    if (!message) {
+      return res.status(404).json({ message: "Message not found" });
+    }
+
+    const senderId = message.senderId;
+    const receiverId = message.receiverId;
+
+    const conversation = await Conversation.findOne({
+      participants: { $all: [senderId, receiverId] },
+    }).populate("messages");
+
+    if (!conversation) {
+      return res.status(404).json({ message: "Conversation not found" });
+    }
+
+    conversation.messages = conversation.messages.filter(
+      (msg) => msg._id.toString() !== id
+    );
+    await Promise.all([conversation.save(), Message.findByIdAndDelete(id)]);
+
+    return res.json({ message: "Deleted successfully", success: true });
+  } catch (error) {
+    next(error);
+  }
+};
