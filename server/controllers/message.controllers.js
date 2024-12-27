@@ -123,3 +123,26 @@ export const deleteMessage = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deleteAllMessages = async (req, res, next) => {
+  try {
+    const receiverId = req.params.id;
+    const senderId = req.user.id;
+
+    const conversation = await Conversation.findOne({
+      participants: { $all: [senderId, receiverId] },
+    }).populate("messages");
+
+    if (!conversation) {
+      return res.status(404).json({ message: "Conversation not found" });
+    }
+
+    await Message.deleteMany({ _id: { $in: conversation.messages } });
+    conversation.messages = [];
+    await conversation.save();
+
+    return res.json({ message: "Deleted successfully", success: true });
+  } catch (error) {
+    next(error);
+  }
+};
